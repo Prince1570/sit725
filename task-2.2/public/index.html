@@ -1,0 +1,52 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Simple NodeJS Server</title>
+</head>
+<body>
+  <h1>Welcome to my simple NodeJS server!</h1>
+  <!--<p>Use the API to add two numbers.</p>
+  <p>Example: <code>5 + 10 = 15</code></p> -->
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Simple Calculator</title>
+</head>
+<body>
+  <h1>Simple Addition Calculator</h1>
+
+  <form id="addForm">
+    <input type="number" id="num1" placeholder="Enter first number" required />
+    <input type="number" id="num2" placeholder="Enter second number" required />
+    <button type="submit">Add</button>
+  </form>
+
+  <h2>Result: <span id="result">--</span></h2>
+
+  <script>
+    document.getElementById('addForm').addEventListener('submit', async (event) => {
+      event.preventDefault(); // Prevent form submission reload
+
+      const num1 = document.getElementById('num1').value;
+      const num2 = document.getElementById('num2').value;
+
+      try {
+        const response = await fetch(`/add?num1=${num1}&num2=${num2}`);
+        if (!response.ok) {
+          const text = await response.text();
+          throw new Error(text);
+        }
+        const resultText = await response.text();
+        document.getElementById('result').textContent = resultText;
+      } catch (error) {
+        document.getElementById('result').textContent = 'Error: ' + error.message;
+      }
+    });
+  </script>
+</body>
+</html>
